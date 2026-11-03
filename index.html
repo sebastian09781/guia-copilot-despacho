@@ -146,6 +146,33 @@ main{max-width:52rem; margin:0 auto; padding-block:clamp(14px, 3vh, 28px) 100px}
 figure.shot{margin:0; width:100%; text-align:left; background:var(--surface); border:1px solid var(--line); border-radius:16px; overflow:hidden}
 figure.shot img{display:block; width:100%; height:auto; border-bottom:1px solid var(--line)}
 figure.shot figcaption{padding:10px 16px; color:var(--muted); font-size:.92rem; line-height:1.45}
+/* Menú de tres secciones */
+.hub{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:14px; width:100%; text-align:left}
+.hub.two{grid-template-columns:repeat(2,minmax(0,1fr))}
+.hubcard{font:inherit; color:var(--ink); background:var(--surface); border:2px solid var(--line); border-radius:18px; padding:18px; display:flex; flex-direction:column; gap:8px; text-align:left; cursor:pointer; transition:border-color .2s, transform .2s, box-shadow .2s}
+.hubcard:hover{border-color:var(--blue); transform:translateY(-2px); box-shadow:0 12px 24px -16px rgba(23,32,43,.5)}
+.hubcard .ico{font-size:2rem; color:var(--blue)}
+.hubcard b{font-family:var(--font-display); font-size:1.2rem}
+.hubcard span{color:var(--muted); font-size:.98rem; line-height:1.45; flex:1}
+.hubcard em{font-style:normal; font-weight:700; color:var(--blue)}
+.hubcard.main{background:var(--blue); border-color:var(--blue); color:var(--accent-ink)}
+.hubcard.main .ico, .hubcard.main em, .hubcard.main span{color:var(--accent-ink)}
+@media (max-width: 820px){ .hub, .hub.two{grid-template-columns:minmax(0,1fr)} }
+.page{display:flex; flex-direction:column; gap:18px}
+.pagehead{display:flex; gap:18px; align-items:center}
+.pagehead .badge{width:64px; height:64px; border-radius:18px; font-size:30px}
+.pagehead .qtext{font-size:clamp(1.5rem, 3vw, 1.9rem)}
+/* Pasos para usar las instrucciones y botón a Copilot */
+.howto{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; margin:0; padding:0; list-style:none}
+.howto li{display:flex; gap:10px; align-items:center; background:var(--surface); border:1px solid var(--line); border-radius:14px; padding:10px 14px; font-size:1rem; line-height:1.35}
+.howto li > span{flex:none; width:30px; height:30px; border-radius:50%; background:var(--green); color:var(--accent-ink); display:grid; place-items:center; font-weight:700}
+@media (max-width: 820px){ .howto{grid-template-columns:minmax(0,1fr)} }
+a.gocopilot{display:grid; grid-template-columns:auto minmax(0,1fr); column-gap:14px; align-items:center; text-decoration:none; color:var(--accent-ink); background:linear-gradient(120deg, var(--blue), var(--violet)); border-radius:16px; padding:14px 20px; font-family:var(--font-display); font-size:1.3rem; font-weight:650}
+a.gocopilot small{grid-column:2; font-family:var(--font-body); font-size:.95rem; font-weight:400; opacity:.9}
+a.gocopilot .gologo{grid-row:span 2; width:48px; height:48px; border-radius:14px; background:rgba(255,255,255,.18); display:grid; place-items:center; font-size:26px}
+a.gocopilot:hover{filter:brightness(1.06)}
+.gologo img, .cta .ci img{width:60%; height:60%}
+a.gocopilot .gologo, .cta .ci{background:#fff}
 .srchead{font-size:.82rem; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:var(--muted); padding:14px 4px 4px}
 .vidhint{display:flex; gap:12px; align-items:center; background:var(--blue-soft); color:var(--blue); border-radius:14px; padding:12px 16px; font-size:1.05rem; line-height:1.4}
 .vidhint .ico{font-size:1.7rem}
@@ -407,15 +434,14 @@ footer.nav{position:fixed; left:0; right:0; bottom:0; z-index:5; background:var(
         <div class="sat s2" style="--c:var(--violet);--cs:var(--violet-soft)"><svg class="ico"><use href="#i-mail"/></svg></div>
         <div class="sat s3" style="--c:var(--green);--cs:var(--green-soft)"><svg class="ico"><use href="#i-meet"/></svg></div>
       </div>
-      <p class="hello">Buenos días,</p>
+      <p class="hello"><span class="greet">Buenos días</span>,</p>
       <h1>Doctora Nubia Margot Peña</h1>
-      <p class="big">Hoy vamos a aprender de inteligencia artificial. Esta es una guía rápida para llegar preparada al taller de Copilot.</p>
-      <ul class="chips">
-        <li><svg class="ico"><use href="#i-flag"/></svg>14 preguntas</li>
-        <li><svg class="ico"><use href="#i-calendar"/></svg>Unos 20 minutos</li>
-        <li><svg class="ico"><use href="#i-play"/></svg>Con videos cortos</li>
-      </ul>
-      <p class="muted">La guía sigue tres días de un caso imaginario en el despacho. Cada escena trae una pregunta: piénsela un momento y luego toque <b>Ver respuesta</b>.</p>
+      <p class="big">Esta guía la prepara para el taller de Copilot. Tiene tres partes: empiece por el tutorial.</p>
+      <div class="hub">
+        <button class="hubcard main" type="button" data-go="tutorial"><svg class="ico"><use href="#i-flag"/></svg><b>1. Tutorial</b><span>14 preguntas con un caso del despacho, videos cortos y ejemplos. Unos 20 minutos.</span><em>Empezar →</em></button>
+        <button class="hubcard" type="button" data-go="fuentes"><svg class="ico"><use href="#i-scale"/></svg><b>2. Fuentes normativas</b><span>Acuerdos, sentencias, leyes y referentes internacionales. Varios se leen aquí mismo.</span><em>Consultar →</em></button>
+        <button class="hubcard" type="button" data-go="preguntas"><svg class="ico"><use href="#i-chat"/></svg><b>3. Preguntas para el taller</b><span>Qué preguntarles a los capacitadores desde su rol de magistrada.</span><em>Ver preguntas →</em></button>
+      </div>
       <p class="credit">Creado por Juan Sebastián Rodríguez Casas, judicante del despacho</p>
     </div>
   </section>
@@ -600,13 +626,15 @@ footer.nav{position:fixed; left:0; right:0; bottom:0; z-index:5; background:var(
         <div class="vid" data-id="voEF-OAwoec" data-title="La IA en Word, Excel y PowerPoint: cómo funciona Copilot" data-meta="YouTube · español · muestra la versión de hogar; la de la Rama se ve muy parecida"></div>
       </div>
       <div class="apppane" data-pane="o" hidden>
-        <p>Arriba de un correo largo aparece <b>Resumir</b>. También puede preguntarle por todo lo recibido sobre un tema.</p>
+        <p>Arriba de un correo largo aparece <b>Resumir</b>. Y al redactar un correo, el ícono de colores de Copilot en la barra de arriba abre un cuadro para pedirle un borrador. También puede preguntarle por todo lo recibido sobre un tema.</p>
+        <figure class="shot"><img src="img/outlook-copilot.png" alt="Correo nuevo en Microsoft Outlook con el cuadro de Copilot y sus indicaciones sugeridas" loading="lazy" width="520" height="361"><figcaption>Así se ve en Microsoft Outlook al redactar: el cuadro de Copilot con indicaciones sugeridas. Imagen de Microsoft. Used with permission from Microsoft.</figcaption></figure>
         <p class="ask"><svg class="ico"><use href="#i-chat"/></svg>“¿Qué me ha enviado Secretaría esta semana sobre el proceso 11001-03-24-000-2026-00000-00?”</p>
-        <div class="vid" data-id="PrI7xxo8AKQ" data-title="5 formas de usar Copilot en Outlook" data-meta="Canal oficial de Microsoft · en inglés, active los subtítulos en español"></div>
+        <div class="vid" data-id="PpiK2dPQkOU" data-title="Cómo resumir hilos de correo en Outlook con Copilot" data-meta="EL PROFE OTTO · español · 1 min y medio"></div>
         <a class="guide-link" href="https://support.microsoft.com/es-ES/Outlook/copilot-pages/summarize-an-email-thread-with-copilot-in-outlook" target="_blank" rel="noopener"><svg class="ico"><use href="#i-eye"/></svg>Ver dónde está, con imágenes (guía oficial de Microsoft)</a>
       </div>
       <div class="apppane" data-pane="t" hidden>
-        <p>Si la reunión tiene transcripción, Copilot le dice qué se habló, qué se acordó y quién quedó con cada tarea.</p>
+        <p>Si la reunión tiene transcripción, Copilot le dice qué se habló, qué se acordó y quién quedó con cada tarea. En un chat, toque los tres puntos (…) de un mensaje y elija <b>Preguntar a Copilot</b>.</p>
+        <figure class="shot"><img src="img/teams-copilot.png" alt="Mensaje de chat en Microsoft Teams con el menú de tres puntos abierto y la opción Preguntar a Copilot resaltada" loading="lazy" width="614" height="481"><figcaption>Así se ve en Microsoft Teams: el menú de un mensaje con la opción “Preguntar a Copilot”. Imagen de Microsoft. Used with permission from Microsoft.</figcaption></figure>
         <p class="ask"><svg class="ico"><use href="#i-chat"/></svg>“¿Qué se acordó en la reunión de despacho de hoy y quién quedó con cada tarea?”</p>
         <a class="guide-link" href="https://support.microsoft.com/en-US/copilot-teams" target="_blank" rel="noopener"><svg class="ico"><use href="#i-eye"/></svg>Ver dónde está, con imágenes (guía oficial de Microsoft, en inglés)</a>
         <div class="vid" data-id="CGRXbjWm2OQ" data-title="Cómo trabajar con Microsoft Copilot en Teams" data-meta="YouTube · español · 2024"></div>
@@ -647,7 +675,13 @@ footer.nav{position:fixed; left:0; right:0; bottom:0; z-index:5; background:var(
       <div class="qmeta"><p class="qnum">Pregunta 8</p><h2 class="qtext">¿Qué le puedo pedir desde mañana?</h2></div>
       <p class="hint scene"><b>Lunes, 11:30 a. m.</b>Con la fórmula clara, el resumen salió bien a la primera. Ahora quiere instrucciones listas para el trabajo de todos los días.</p></div>
     <div class="answer">
-      <p class="muted">Copie, pegue en Copilot y ajuste. Entre paréntesis, el nivel del Acuerdo PCSJA24-12243.</p>
+      <ol class="howto">
+        <li><span>1</span><p>Toque <b>Copiar</b> en la instrucción que quiera</p></li>
+        <li><span>2</span><p>Abra Copilot con el botón de abajo</p></li>
+        <li><span>3</span><p>Pegue con <b>Ctrl + V</b> y agregue su documento</p></li>
+      </ol>
+      <a class="gocopilot" href="https://m365.cloud.microsoft/chat" target="_blank" rel="noopener"><span class="gologo"><img src="img/copilot-logo.svg" alt=""></span>Abrir Copilot ↗<small>Se abre en otra pestaña. Inicie sesión con su correo de la Rama.</small></a>
+      <p class="muted">Debajo de cada instrucción está el nivel de riesgo según el Acuerdo PCSJA24-12243.</p>
       <div class="prompts">
         <div class="prompt" style="--c:var(--blue)"><svg class="ico"><use href="#i-doc"/></svg><div><p class="q">Resume esta demanda en una tabla con: partes, acto demandado, pretensiones, normas violadas y concepto de violación. Usa solo este documento y señala la página de cada dato.</p><span class="tag">Revisar el resultado (art. 4.2)</span></div><button class="copy" type="button"><svg class="ico"><use href="#i-copy"/></svg>Copiar</button></div>
         <div class="prompt" style="--c:var(--violet)"><svg class="ico"><use href="#i-calendar"/></svg><div><p class="q">Ordena cronológicamente los hechos de este documento en una lista con fecha y una línea por hecho. Si una fecha no aparece, escribe “sin fecha”.</p><span class="tag">Especial cuidado (art. 4.3)</span></div><button class="copy" type="button"><svg class="ico"><use href="#i-copy"/></svg>Copiar</button></div>
@@ -781,12 +815,24 @@ footer.nav{position:fixed; left:0; right:0; bottom:0; z-index:5; background:var(
       <div class="done-mark" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div>
       <h1>¡Lista para el taller, doctora!</h1>
       <a class="cta" href="https://m365.cloud.microsoft/chat" target="_blank" rel="noopener">
-        <span class="ci"><svg class="ico"><use href="#i-spark"/></svg></span>
+        <span class="ci"><img src="img/copilot-logo.svg" alt=""></span>
         <span><strong>Pregúntele ahora a Copilot ↗</strong><small>Inicie sesión con su correo de la Rama. Debajo de su nombre debe decir “M365 Copilot (Premium)”.</small></span>
       </a>
       <figure class="shot"><img src="img/copilot-chat.png" alt="Pantalla de inicio de Microsoft Copilot con el cuadro para escribir y un escudo verde arriba a la derecha" loading="lazy" width="1920" height="1080"><figcaption>Así se ve la pantalla de inicio de Microsoft Copilot (imagen en inglés). El <b>escudo verde</b> arriba a la derecha indica que la protección de datos empresariales está activa. Imagen de Microsoft. Used with permission from Microsoft.</figcaption></figure>
       <div class="prompt firstq" style="--c:var(--violet)"><svg class="ico"><use href="#i-chat"/></svg><div><p class="q">Explícame en cinco puntos cómo puedes ayudarme en el trabajo de un despacho judicial del Consejo de Estado, y qué no debo pedirte.</p><span class="tag">Una buena primera pregunta para empezar</span></div><button class="copy" type="button"><svg class="ico"><use href="#i-copy"/></svg>Copiar</button></div>
-      <p class="big">Si quiere leer el texto completo de las normas, aquí están. Los que tienen el <b>ojo</b> se leen aquí mismo.</p>
+      <div class="hub two">
+        <button class="hubcard" type="button" data-go="fuentes"><svg class="ico"><use href="#i-scale"/></svg><b>Fuentes normativas</b><span>Las normas y documentos completos.</span><em>Consultar →</em></button>
+        <button class="hubcard" type="button" data-go="preguntas"><svg class="ico"><use href="#i-chat"/></svg><b>Preguntas para el taller</b><span>Lo que conviene preguntar a los capacitadores.</span><em>Ver preguntas →</em></button>
+      </div>
+      <p class="credit">Creado por Juan Sebastián Rodríguez Casas, judicante del despacho · noviembre de 2026</p>
+    </div>
+  </section>
+
+  <!-- Sección: fuentes normativas -->
+  <section class="page" id="pg-fuentes" data-title="Fuentes normativas" style="--c:var(--violet);--cs:var(--violet-soft)" hidden>
+    <div class="pagehead"><div class="badge"><svg class="ico"><use href="#i-scale"/></svg></div>
+      <div><p class="qnum">Sección 2</p><h2 class="qtext">Fuentes normativas</h2></div></div>
+    <p class="big">Para consultar cuando quiera. Los que tienen el <b>ojo</b> se leen aquí mismo; los que tienen la cadena abren la página oficial.</p>
       <div class="sources">
         <p class="srchead">Rama Judicial</p>
         <a href="https://geneticayderecho.uexternado.edu.co/wp-content/uploads/sites/57/2026/03/1.-Acuerdo-PCSJA24-12243.pdf" data-doc="docs/acuerdo-pcsja24-12243.pdf" target="_blank" rel="noopener"><svg class="ico"><use href="#i-stamp"/></svg><span><strong>Acuerdo PCSJA24-12243 de 2024</strong><span>Reglas de uso de IA en la Rama Judicial</span></span><svg class="ico"><use href="#i-eye"/></svg></a>
@@ -805,20 +851,53 @@ footer.nav{position:fixed; left:0; right:0; bottom:0; z-index:5; background:var(
         <p class="srchead">Para seguir aprendiendo</p>
         <a href="https://www.ramajudicial.gov.co/web/utdi/inteligencia-artificial1" target="_blank" rel="noopener"><svg class="ico"><use href="#i-columns"/></svg><span><strong>Inteligencia Artificial en la Rama Judicial</strong><span>Página de la Unidad de Transformación Digital</span></span><svg class="ico"><use href="#i-link"/></svg></a>
       </div>
-      <p class="credit">Creado por Juan Sebastián Rodríguez Casas, judicante del despacho · noviembre de 2026</p>
+  </section>
+
+  <!-- Sección: preguntas para los capacitadores -->
+  <section class="page" id="pg-preguntas" data-title="Preguntas para el taller" style="--c:var(--green);--cs:var(--green-soft)" hidden>
+    <div class="pagehead"><div class="badge"><svg class="ico"><use href="#i-chat"/></svg></div>
+      <div><p class="qnum">Sección 3</p><h2 class="qtext">Preguntas para los capacitadores</h2></div></div>
+    <p class="big">Pensadas para su rol de <b>magistrada titular</b>: usted decide, firma y responde por el trabajo del despacho. Copie las que le sirvan.</p>
+    <p class="srchead">Acceso y licencia</p>
+    <div class="prompts">
+      <div class="prompt" style="--c:var(--blue)"><svg class="ico"><use href="#i-user"/></svg><div><p class="q">¿Mi cuenta tiene la licencia completa de Copilot o solo Copilot Chat? ¿Cómo lo verifico yo misma?</p></div><button class="copy" type="button"><svg class="ico"><use href="#i-copy"/></svg>Copiar</button></div>
+      <div class="prompt" style="--c:var(--blue)"><svg class="ico"><use href="#i-balance2"/></svg><div><p class="q">¿Mis magistrados auxiliares y sustanciadores tienen la misma licencia? Si no, ¿cómo la solicito para el despacho?</p></div><button class="copy" type="button"><svg class="ico"><use href="#i-copy"/></svg>Copiar</button></div>
+    </div>
+    <p class="srchead">Reserva y confidencialidad</p>
+    <div class="prompts">
+      <div class="prompt" style="--c:var(--red)"><svg class="ico"><use href="#i-lock"/></svg><div><p class="q">¿Puedo usar Copilot con expedientes que tienen reserva legal? ¿Qué pasa con los documentos marcados con etiqueta de confidencialidad?</p></div><button class="copy" type="button"><svg class="ico"><use href="#i-copy"/></svg>Copiar</button></div>
+      <div class="prompt" style="--c:var(--red)"><svg class="ico"><use href="#i-eye"/></svg><div><p class="q">¿Quién puede ver lo que le pregunto a Copilot? ¿Se guarda mi historial, dónde y por cuánto tiempo?</p></div><button class="copy" type="button"><svg class="ico"><use href="#i-copy"/></svg>Copiar</button></div>
+      <div class="prompt" style="--c:var(--red)"><svg class="ico"><use href="#i-meet"/></svg><div><p class="q">Si hacemos Sala por Teams, ¿Copilot transcribe o resume la deliberación? ¿Cómo me aseguro de que no quede registro de lo que es reservado?</p></div><button class="copy" type="button"><svg class="ico"><use href="#i-copy"/></svg>Copiar</button></div>
+    </div>
+    <p class="srchead">Decisión y responsabilidad</p>
+    <div class="prompts">
+      <div class="prompt" style="--c:var(--violet)"><svg class="ico"><use href="#i-stamp"/></svg><div><p class="q">Si un proyecto del despacho se apoyó en Copilot, ¿cómo dejo la constancia del artículo 10 del Acuerdo PCSJA24-12243 en una providencia de Sala?</p></div><button class="copy" type="button"><svg class="ico"><use href="#i-copy"/></svg>Copiar</button></div>
+      <div class="prompt" style="--c:var(--violet)"><svg class="ico"><use href="#i-shield"/></svg><div><p class="q">¿Cómo superviso que mi equipo use Copilot dentro de las reglas del Acuerdo? ¿Existe algún registro de uso que yo pueda revisar?</p></div><button class="copy" type="button"><svg class="ico"><use href="#i-copy"/></svg>Copiar</button></div>
+    </div>
+    <p class="srchead">El trabajo de la Sección Primera</p>
+    <div class="prompts">
+      <div class="prompt" style="--c:var(--amber)"><svg class="ico"><use href="#i-layers"/></svg><div><p class="q">¿Copilot puede contrastar un acto administrativo demandado con las normas que se invocan como violadas, sin inventar artículos? ¿Cómo se lo pido?</p></div><button class="copy" type="button"><svg class="ico"><use href="#i-copy"/></svg>Copiar</button></div>
+      <div class="prompt" style="--c:var(--amber)"><svg class="ico"><use href="#i-folder"/></svg><div><p class="q">¿Funciona con expedientes escaneados de SAMAI, es decir, PDF que son imagen y no texto?</p></div><button class="copy" type="button"><svg class="ico"><use href="#i-copy"/></svg>Copiar</button></div>
+      <div class="prompt" style="--c:var(--amber)"><svg class="ico"><use href="#i-robot"/></svg><div><p class="q">¿La Rama ya tiene agentes preparados para tareas judiciales, como el estudio de admisión de una demanda? ¿Podemos crear uno propio para el despacho?</p></div><button class="copy" type="button"><svg class="ico"><use href="#i-copy"/></svg>Copiar</button></div>
+    </div>
+    <p class="srchead">Riesgos</p>
+    <div class="prompts">
+      <div class="prompt" style="--c:var(--green)"><svg class="ico"><use href="#i-alert"/></svg><div><p class="q">¿Qué protección hay contra instrucciones escondidas en memoriales o anexos que lee Copilot?</p></div><button class="copy" type="button"><svg class="ico"><use href="#i-copy"/></svg>Copiar</button></div>
+      <div class="prompt" style="--c:var(--green)"><svg class="ico"><use href="#i-bell"/></svg><div><p class="q">Si Copilot me da una respuesta errada o sospechosa, ¿a quién y cómo la reporto, según el artículo 14 del Acuerdo?</p></div><button class="copy" type="button"><svg class="ico"><use href="#i-copy"/></svg>Copiar</button></div>
     </div>
   </section>
 </main>
 
 <div class="coach" id="coach" role="dialog" aria-modal="true" aria-labelledby="coach-t" hidden>
   <div class="coach-card">
-    <h2 id="coach-t">Antes de empezar: así se usa esta guía</h2>
+    <h2 id="coach-t"><span class="greet">Buenos días</span>, doctora. ¿Cómo interactuar con esta guía?</h2>
     <ul class="coach-list">
+      <li><span class="ci" style="--c:var(--blue);--cs:var(--blue-soft)"><svg class="ico"><use href="#i-flag"/></svg></span><span>Tiene <b>tres secciones</b>: el tutorial, las fuentes normativas y las preguntas para el taller. Vamos a empezar por el <b>tutorial</b>.</span></li>
       <li><span class="ci" style="--c:var(--amber);--cs:var(--amber-soft)"><svg class="ico"><use href="#i-help"/></svg></span><span>Cada paso empieza con una <b>pregunta</b>. Toque <b>Ver respuesta</b> para descubrirla.</span></li>
       <li><span class="ci" style="--c:var(--blue);--cs:var(--blue-soft)"><svg class="ico"><use href="#i-hand"/></svg></span><span>Las tarjetas con esta <b>manito</b> se pueden tocar: se voltean y muestran más información.</span></li>
       <li><span class="ci" style="--c:var(--green);--cs:var(--green-soft)"><svg class="ico"><use href="#i-copy"/></svg></span><span>El botón <b>Copiar</b> guarda una instrucción para pegarla en Copilot.</span></li>
       <li><span class="ci" style="--c:var(--red);--cs:var(--red-soft)"><svg class="ico"><use href="#i-play"/></svg></span><span>Varias respuestas traen un <b>video corto</b>. Véalo ahí mismo: al pasar al siguiente paso se detiene solo.</span></li>
-      <li><span class="ci" style="--c:var(--violet);--cs:var(--violet-soft)"><svg class="ico"><use href="#i-sound"/></svg></span><span>Arriba a la derecha puede <b>apagar el sonido</b> o volver a ver estas indicaciones.</span></li>
+      <li><span class="ci" style="--c:var(--violet);--cs:var(--violet-soft)"><svg class="ico"><use href="#i-sound"/></svg></span><span>Abajo están los botones <b>Anterior</b> y <b>Siguiente</b>. Arriba a la derecha puede <b>apagar el sonido</b> o volver a ver estas indicaciones.</span></li>
     </ul>
     <p class="taphint"><svg class="ico"><use href="#i-hand"/></svg>Pruebe ahora: toque esta tarjeta.</p>
     <button class="flip sm demo hintme" type="button" style="--c:var(--amber);--cs:var(--amber-soft)"><span class="in">
@@ -921,10 +1000,31 @@ footer.nav{position:fixed; left:0; right:0; bottom:0; z-index:5; background:var(
   var dots = Array.prototype.slice.call(bar.children);
   function isQ(s){ return !!s.querySelector('.answer'); }
 
+  // Secciones Fuentes y Preguntas: fuera del recorrido del tutorial
+  var sections = {}, page = null;
+  document.querySelectorAll('.page').forEach(function(p){ sections[p.id.replace('pg-', '')] = p; });
+  function showPage(name){
+    pauseVideos();
+    page = name;
+    steps.forEach(function(s){ s.hidden = true; });
+    Object.keys(sections).forEach(function(k){ sections[k].hidden = k !== name; });
+    dots.forEach(function(d){ d.className = ''; });
+    count.textContent = sections[name].dataset.title;
+    prev.disabled = false;
+    label();
+    window.scrollTo(0, 0);
+    try { history.replaceState(null, '', '#' + name); } catch(e){}
+  }
+  document.querySelectorAll('[data-go]').forEach(function(b){
+    b.addEventListener('click', function(){ play('tick'); if (b.dataset.go === 'tutorial') go(1); else showPage(b.dataset.go); });
+  });
+
   function label(){
     var s = steps[cur];
     next.classList.remove('reveal');
-    if (cur === 0) next.innerHTML = 'Empezar →';
+    prev.innerHTML = page ? '← Menú' : '← Anterior';
+    if (page) next.innerHTML = 'Ir al tutorial →';
+    else if (cur === 0) next.innerHTML = 'Empezar el tutorial →';
     else if (cur === last) next.innerHTML = 'Volver al inicio';
     else if (isQ(s) && !s.classList.contains('open')) { next.innerHTML = 'Ver respuesta ↓'; next.classList.add('reveal'); }
     else if (cur === last - 1) next.innerHTML = 'Terminar →';
@@ -938,6 +1038,8 @@ footer.nav{position:fixed; left:0; right:0; bottom:0; z-index:5; background:var(
   }
   function go(i, openIt){
     pauseVideos();
+    page = null;
+    Object.keys(sections).forEach(function(k){ sections[k].hidden = true; });
     cur = Math.max(0, Math.min(last, i));
     steps.forEach(function(s, k){ s.hidden = k !== cur; });
     var s = steps[cur];
@@ -958,32 +1060,36 @@ footer.nav{position:fixed; left:0; right:0; bottom:0; z-index:5; background:var(
     label();
   }
   next.addEventListener('click', function(){
+    if (page) { go(1); play('tick'); return; }
     var s = steps[cur];
     if (isQ(s) && !s.classList.contains('open')) return reveal();
-    var wasWelcome = cur === 0;
     go(cur === last ? 0 : cur + 1);
     play(cur === last ? 'fanfare' : 'tick');
-    if (wasWelcome && !coachSeen()) openCoach();
   });
-  prev.addEventListener('click', function(){ go(cur - 1, true); play('tick'); });
+  prev.addEventListener('click', function(){ go(page ? 0 : cur - 1, true); play('tick'); });
 
-  // Ventana "así se usa esta guía"
-  var coach = document.getElementById('coach'), CKEY = 'copilot-guia-vista';
+  // Saludo según la hora
+  var h = new Date().getHours(), hola = h < 12 ? 'Buenos días' : (h < 19 ? 'Buenas tardes' : 'Buenas noches');
+  document.querySelectorAll('.greet').forEach(function(g){ g.textContent = hola; });
+
+  // Ventana "cómo interactuar con esta guía": se abre sola la primera vez y lleva al tutorial
+  var coach = document.getElementById('coach'), okBtn = document.getElementById('coach-ok'), CKEY = 'copilot-guia-vista', firstTime = false;
   function coachSeen(){ try { return localStorage.getItem(CKEY) === '1'; } catch(e){ return false; } }
-  function openCoach(){ coach.hidden = false; document.getElementById('coach-ok').focus(); }
-  function closeCoach(){ coach.hidden = true; try { localStorage.setItem(CKEY, '1'); } catch(e){} play('tick'); next.focus(); }
-  document.getElementById('coach-ok').addEventListener('click', closeCoach);
-  document.getElementById('help').addEventListener('click', function(){ play('tick'); openCoach(); });
+  function openCoach(first){ firstTime = !!first; okBtn.innerHTML = first ? 'Entendido, empecemos por el tutorial →' : 'Entendido'; coach.hidden = false; okBtn.focus(); }
+  function closeCoach(){ coach.hidden = true; try { localStorage.setItem(CKEY, '1'); } catch(e){} play('tick'); if (firstTime) { firstTime = false; go(1); } next.focus(); }
+  okBtn.addEventListener('click', closeCoach);
+  document.getElementById('help').addEventListener('click', function(){ play('tick'); openCoach(false); });
   coach.addEventListener('click', function(e){ if (e.target === coach) closeCoach(); });
   document.addEventListener('keydown', function(e){
     if (!coach.hidden) { if (e.key === 'Escape') closeCoach(); return; }
     if (!viewer.hidden) return;
     if (e.target.closest && e.target.closest('input,textarea')) return;
     if (e.key === 'ArrowRight') next.click();
-    if (e.key === 'ArrowLeft') go(cur - 1, true);
+    if (e.key === 'ArrowLeft' && !prev.disabled) prev.click();
   });
-  var m = /^#paso-(\d+)$/.exec(location.hash);
-  go(m ? parseInt(m[1], 10) : 0);
+  var m = /^#paso-(\d+)$/.exec(location.hash), hp = location.hash.slice(1);
+  if (sections[hp]) showPage(hp); else go(m ? parseInt(m[1], 10) : 0);
+  if (!coachSeen()) openCoach(cur === 0 && !page);
 
   // Texto escondido (prompt injection)
   var rs = document.getElementById('reveal-secret'), dm = document.getElementById('docmock');
