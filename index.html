@@ -140,7 +140,11 @@ main{max-width:52rem; margin:0 auto; padding-block:clamp(14px, 3vh, 28px) 100px}
 .ask .ico{color:var(--blue); font-size:1.4rem; margin-top:3px; font-style:normal}
 
 /* Video */
-.vid{display:block}
+.vid{display:flex; flex-direction:column; gap:10px}
+.vidhint{display:flex; gap:12px; align-items:center; background:var(--blue-soft); color:var(--blue); border-radius:14px; padding:12px 16px; font-size:1.05rem; line-height:1.4}
+.vidhint .ico{font-size:1.7rem}
+.vidjump{font:inherit; align-self:flex-start; display:inline-flex; gap:8px; align-items:center; font-weight:700; font-size:.95rem; color:var(--blue); background:var(--blue-soft); border:0; border-radius:999px; padding:6px 14px; cursor:pointer}
+.vidjump .ico{font-size:1.2rem}
 figure.player{margin:0; background:var(--surface); border:1px solid var(--line); border-radius:16px; overflow:hidden}
 figure.player .frame{position:relative; aspect-ratio:16/9; max-width:100%; background:#000}
 figure.player iframe{position:absolute; inset:0; width:100%; height:100%; border:0}
@@ -765,6 +769,7 @@ footer.nav{position:fixed; left:0; right:0; bottom:0; z-index:5; background:var(
       <li><span class="ci" style="--c:var(--amber);--cs:var(--amber-soft)"><svg class="ico"><use href="#i-help"/></svg></span><span>Cada paso empieza con una <b>pregunta</b>. Toque <b>Ver respuesta</b> para descubrirla.</span></li>
       <li><span class="ci" style="--c:var(--blue);--cs:var(--blue-soft)"><svg class="ico"><use href="#i-hand"/></svg></span><span>Las tarjetas con esta <b>manito</b> se pueden tocar: se voltean y muestran más información.</span></li>
       <li><span class="ci" style="--c:var(--green);--cs:var(--green-soft)"><svg class="ico"><use href="#i-copy"/></svg></span><span>El botón <b>Copiar</b> guarda una instrucción para pegarla en Copilot.</span></li>
+      <li><span class="ci" style="--c:var(--red);--cs:var(--red-soft)"><svg class="ico"><use href="#i-play"/></svg></span><span>Varias respuestas traen un <b>video corto</b>. Véalo ahí mismo: al pasar al siguiente paso se detiene solo.</span></li>
       <li><span class="ci" style="--c:var(--violet);--cs:var(--violet-soft)"><svg class="ico"><use href="#i-sound"/></svg></span><span>Arriba a la derecha puede <b>apagar el sonido</b> o volver a ver estas indicaciones.</span></li>
     </ul>
     <p class="taphint"><svg class="ico"><use href="#i-hand"/></svg>Pruebe ahora: toque esta tarjeta.</p>
@@ -798,12 +803,21 @@ footer.nav{position:fixed; left:0; right:0; bottom:0; z-index:5; background:var(
   // Videos: incrustados en la versión publicada fuera de Claude; tarjeta con enlace aquí
   document.querySelectorAll('.vid').forEach(function(el){
     var id = el.dataset.id, t = el.dataset.title, m = el.dataset.meta, url = 'https://www.youtube.com/watch?v=' + id;
+    var hint = '<p class="vidhint"><svg class="ico"><use href="#i-play"/></svg><span><b>Vea este video corto antes de seguir.</b> Explica lo mismo con imágenes' + (EMBED ? ' y se ve aquí mismo.' : '.') + '</span></p>';
+    // Botón al inicio de la respuesta que lleva al video, que siempre queda al final
+    var ans = el.closest('.answer');
+    if (ans && !ans.querySelector('.vidjump')) {
+      var j = document.createElement('button'); j.type = 'button'; j.className = 'vidjump';
+      j.innerHTML = '<svg class="ico"><use href="#i-play"/></svg>Esta respuesta trae un video ↓';
+      j.addEventListener('click', function(){ var v = Array.prototype.filter.call(ans.querySelectorAll('.vid'), function(x){ return x.offsetParent; })[0]; if (v) v.scrollIntoView({ behavior: 'smooth', block: 'center' }); });
+      ans.insertBefore(j, ans.firstChild);
+    }
     if (EMBED) {
-      el.innerHTML = '<figure class="player"><div class="frame"><iframe src="https://www.youtube-nocookie.com/embed/' + id + '?rel=0" title="' + t +
+      el.innerHTML = hint + '<figure class="player"><div class="frame"><iframe src="https://www.youtube-nocookie.com/embed/' + id + '?rel=0&enablejsapi=1" title="' + t +
         '" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allow="encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe></div><figcaption><strong>' + t +
         '</strong><small>' + m + ' · <a href="' + url + '" target="_blank" rel="noopener">abrir en YouTube</a></small></figcaption></figure>';
     } else {
-      el.innerHTML = '<a class="vcard" href="' + url + '" target="_blank" rel="noopener"><span class="play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 4l14 8-14 8z"/></svg></span><span><strong>' +
+      el.innerHTML = hint + '<a class="vcard" href="' + url + '" target="_blank" rel="noopener"><span class="play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 4l14 8-14 8z"/></svg></span><span><strong>' +
         t + '</strong><small>' + m + '</small></span><span class="go">Ver video ↗</span></a>';
     }
   });
@@ -868,7 +882,14 @@ footer.nav{position:fixed; left:0; right:0; bottom:0; z-index:5; background:var(
     else if (cur === last - 1) next.innerHTML = 'Terminar →';
     else next.innerHTML = 'Siguiente →';
   }
+  // Un iframe oculto sigue sonando: al cambiar de paso o de pestaña se pausan todos
+  function pauseVideos(){
+    document.querySelectorAll('.vid iframe').forEach(function(f){
+      try { f.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*'); } catch(e){}
+    });
+  }
   function go(i, openIt){
+    pauseVideos();
     cur = Math.max(0, Math.min(last, i));
     steps.forEach(function(s, k){ s.hidden = k !== cur; });
     var s = steps[cur];
@@ -938,6 +959,7 @@ footer.nav{position:fixed; left:0; right:0; bottom:0; z-index:5; background:var(
   tabs.forEach(function(t){
     t.addEventListener('click', function(){
       play('tick');
+      pauseVideos();
       tabs.forEach(function(x){ x.setAttribute('aria-selected', x === t ? 'true' : 'false'); });
       document.querySelectorAll('.apppane').forEach(function(p){ p.hidden = p.dataset.pane !== t.dataset.app; });
     });
