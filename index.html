@@ -173,6 +173,40 @@ a.gocopilot .gologo{grid-row:span 2; width:48px; height:48px; border-radius:14px
 a.gocopilot:hover{filter:brightness(1.06)}
 .gologo img, .cta .ci img{width:60%; height:60%}
 a.gocopilot .gologo, .cta .ci{background:#fff}
+/* Teléfono: menos alto en encabezados y tarjetas para que el contenido se vea sin tanto scroll */
+*, *::before, *::after{box-sizing:inherit}
+@media (max-width: 560px){
+  .brand{font-size:.92rem; white-space:nowrap}
+  .count{font-size:.8rem; white-space:nowrap}
+  .top-in{gap:8px; padding-block:8px}
+  .btn{white-space:nowrap; padding:10px 16px}
+  .intro .orbit{display:none}
+  .hero{gap:8px; padding-top:4px}
+  .hello{font-size:1.1rem}
+  .hero h1{font-size:1.7rem}
+  .hero .big{font-size:1.02rem}
+  .hubcard{display:grid; grid-template-columns:auto minmax(0,1fr); column-gap:12px; row-gap:2px; align-items:center; padding:12px 14px}
+  .hubcard .ico{grid-row:span 2; font-size:1.7rem}
+  .hubcard b{font-size:1.05rem}
+  .hubcard span{font-size:.9rem}
+  .hubcard em{display:none}
+  .qhead{padding-top:12px; gap:10px}
+  .badge{width:72px; height:72px; font-size:34px; border-radius:20px}
+  .step.open .badge{width:52px; height:52px; font-size:24px; border-radius:14px}
+  .qtext{font-size:1.75rem}
+  .step.open .qtext{font-size:1.35rem}
+  .big{font-size:1.12rem}
+  .flip, .flip .in, .flip.sm, .flip.sm .in, .flip.tall, .flip.tall .in{min-height:0}
+  .flip .f, .flip .b{padding:14px 16px}
+  .flip .f b{font-size:1.2rem}
+  .flip .f .ico{font-size:1.9rem}
+  .analogy, .warn, .panel, .tile{padding:14px 16px}
+  .analogy p{font-size:1.05rem}
+  .analogy .ico{font-size:1.9rem}
+  .done-mark{width:60px; height:60px} .done-mark svg{width:40px; height:40px}
+  .cta{padding:16px; gap:14px} .cta .ci{width:48px; height:48px} .cta strong{font-size:1.2rem}
+  .coach-card{padding:20px; gap:12px} .coach-card h2{font-size:1.35rem}
+}
 .srchead{font-size:.82rem; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:var(--muted); padding:14px 4px 4px}
 .vidhint{display:flex; gap:12px; align-items:center; background:var(--blue-soft); color:var(--blue); border-radius:14px; padding:12px 16px; font-size:1.05rem; line-height:1.4}
 .vidhint .ico{font-size:1.7rem}
@@ -371,6 +405,19 @@ footer.nav{position:fixed; left:0; right:0; bottom:0; z-index:5; background:var(
 .viewer-pages{overflow-y:auto; background:var(--surface); padding:14px; display:flex; flex-direction:column; gap:14px; align-items:center; min-height:50vh}
 .viewer-pages canvas{width:100%; max-width:100%; height:auto; background:#fff; box-shadow:0 6px 18px -10px rgba(23,32,43,.5)}
 @media (max-width: 560px){ .viewer-head a{display:none} }
+/* Va al final para ganarle a las alturas mínimas de las tarjetas definidas arriba */
+@media (max-width: 560px){
+  .flip, .flip .in, .flip.sm, .flip.sm .in, .flip.tall, .flip.tall .in{min-height:0}
+  /* Cada tarjeta mide lo de la cara visible, no lo de la cara escondida */
+  .flip .in{display:block}
+  .flip .f{position:relative; display:grid; grid-template-columns:auto minmax(0,1fr); column-gap:12px; row-gap:0; align-items:center; padding-right:48px; min-height:72px}
+  .flip .f .ico{grid-row:span 2}
+  .flip.tall .f{display:flex}
+  .flip .b{position:absolute; inset:0; overflow:hidden}
+  .flip.on .f{position:absolute; inset:0}
+  .flip.on .b{position:relative; inset:auto; overflow:visible}
+}
+@media (max-width: 420px){ .count{display:none} }
 </style>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
@@ -936,7 +983,7 @@ footer.nav{position:fixed; left:0; right:0; bottom:0; z-index:5; background:var(
     if (ans && !ans.querySelector('.vidjump')) {
       var j = document.createElement('button'); j.type = 'button'; j.className = 'vidjump';
       j.innerHTML = '<svg class="ico"><use href="#i-play"/></svg>Esta respuesta trae un video ↓';
-      j.addEventListener('click', function(){ var v = Array.prototype.filter.call(ans.querySelectorAll('.vid'), function(x){ return x.offsetParent; })[0]; if (v) v.scrollIntoView({ behavior: 'smooth', block: 'center' }); });
+      j.addEventListener('click', function(){ play('select'); var v = Array.prototype.filter.call(ans.querySelectorAll('.vid'), function(x){ return x.offsetParent; })[0]; if (v) v.scrollIntoView({ behavior: 'smooth', block: 'center' }); });
       ans.insertBefore(j, ans.firstChild);
     }
     if (EMBED) {
@@ -952,26 +999,56 @@ footer.nav{position:fixed; left:0; right:0; bottom:0; z-index:5; background:var(
   // Sonidos generados en el navegador (sin archivos)
   var SKEY = 'copilot-sonido', soundOn = true, ctx = null;
   try { soundOn = localStorage.getItem(SKEY) !== 'off'; } catch(e){}
-  function ac(){ if (!ctx) { try { ctx = new (window.AudioContext || window.webkitAudioContext)(); } catch(e){ return null; } } if (ctx.state === 'suspended') ctx.resume(); return ctx; }
-  function tone(f, t0, d, type, vol){
-    var a = ac(); if (!a) return; var o = a.createOscillator(), g = a.createGain(), t = a.currentTime + (t0 || 0);
-    o.type = type || 'sine'; o.frequency.setValueAtTime(f, t);
-    g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(vol || 0.08, t + 0.01); g.gain.exponentialRampToValueAtTime(0.0001, t + d);
-    o.connect(g); g.connect(a.destination); o.start(t); o.stop(t + d + 0.05);
+  // Todo pasa por un filtro suave y un eco corto para que suene cálido y no metálico
+  var bus = null;
+  function ac(){
+    if (!ctx) {
+      try { ctx = new (window.AudioContext || window.webkitAudioContext)(); } catch(e){ return null; }
+      var master = ctx.createGain(), lp = ctx.createBiquadFilter(), dl = ctx.createDelay(), fb = ctx.createGain(), wet = ctx.createGain();
+      master.gain.value = 0.7; lp.type = 'lowpass'; lp.frequency.value = 4200;
+      dl.delayTime.value = 0.13; fb.gain.value = 0.22; wet.gain.value = 0.18;
+      master.connect(lp); lp.connect(ctx.destination);
+      lp.connect(dl); dl.connect(fb); fb.connect(dl); dl.connect(wet); wet.connect(ctx.destination);
+      bus = master;
+    }
+    if (ctx.state === 'suspended') ctx.resume();
+    return ctx;
   }
-  function swoosh(){
-    var a = ac(); if (!a) return; var n = Math.floor(a.sampleRate * 0.18), buf = a.createBuffer(1, n, a.sampleRate), d = buf.getChannelData(0);
-    for (var i = 0; i < n; i++) d[i] = (Math.random() * 2 - 1) * (1 - i / n);
-    var src = a.createBufferSource(), f = a.createBiquadFilter(), g = a.createGain();
-    src.buffer = buf; f.type = 'bandpass'; f.frequency.setValueAtTime(900, a.currentTime); f.frequency.exponentialRampToValueAtTime(2600, a.currentTime + 0.16); g.gain.value = 0.12;
-    src.connect(f); f.connect(g); g.connect(a.destination); src.start();
+  // Campanita: nota con un armónico que se apaga más rápido
+  function bell(f, t0, d, vol){
+    var a = ac(); if (!a) return; var t = a.currentTime + (t0 || 0);
+    [[1, 1], [2.01, 0.25], [3, 0.08]].forEach(function(p){
+      var o = a.createOscillator(), g = a.createGain(), len = d / p[0] * 1.2;
+      o.type = 'sine'; o.frequency.setValueAtTime(f * p[0], t);
+      g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime((vol || 0.06) * p[1], t + 0.008); g.gain.exponentialRampToValueAtTime(0.0001, t + len);
+      o.connect(g); g.connect(bus); o.start(t); o.stop(t + len + 0.05);
+    });
+  }
+  // Toque de madera: golpe corto que baja de tono
+  function tap(f, vol){
+    var a = ac(); if (!a) return; var t = a.currentTime, o = a.createOscillator(), g = a.createGain();
+    o.type = 'triangle'; o.frequency.setValueAtTime(f, t); o.frequency.exponentialRampToValueAtTime(f * 0.6, t + 0.08);
+    g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(vol || 0.07, t + 0.004); g.gain.exponentialRampToValueAtTime(0.0001, t + 0.1);
+    o.connect(g); g.connect(bus); o.start(t); o.stop(t + 0.15);
+  }
+  // Soplo de papel: ruido filtrado, para voltear tarjetas y abrir documentos
+  function swoosh(from, to, len, vol){
+    var a = ac(); if (!a) return; var n = Math.floor(a.sampleRate * len), buf = a.createBuffer(1, n, a.sampleRate), d = buf.getChannelData(0);
+    for (var i = 0; i < n; i++) d[i] = (Math.random() * 2 - 1) * Math.sin(Math.PI * i / n);
+    var src = a.createBufferSource(), f = a.createBiquadFilter(), g = a.createGain(), t = a.currentTime;
+    src.buffer = buf; f.type = 'bandpass'; f.Q.value = 0.8; f.frequency.setValueAtTime(from, t); f.frequency.exponentialRampToValueAtTime(to, t + len); g.gain.value = vol;
+    src.connect(f); f.connect(g); g.connect(bus); src.start();
   }
   var sfx = {
-    tick: function(){ tone(740, 0, 0.07, 'triangle', 0.05); },
-    reveal: function(){ tone(660, 0, 0.22, 'sine', 0.07); tone(990, 0.09, 0.32, 'sine', 0.07); },
-    flip: function(){ swoosh(); },
-    ding: function(){ tone(1318, 0, 0.35, 'sine', 0.06); },
-    fanfare: function(){ [523, 659, 784, 1047].forEach(function(f, i){ tone(f, i * 0.11, 0.4, 'triangle', 0.07); }); }
+    tick: function(){ tap(880, 0.06); },                                     // avanzar
+    back: function(){ tap(620, 0.06); },                                     // retroceder
+    select: function(){ bell(784, 0, 0.35, 0.05); bell(1175, 0.07, 0.45, 0.04); }, // elegir sección o pestaña
+    reveal: function(){ [523, 659, 784].forEach(function(f, i){ bell(f, i * 0.07, 0.6, 0.05); }); }, // ver respuesta
+    flip: function(){ swoosh(700, 2400, 0.22, 0.09); },
+    open: function(){ swoosh(500, 1600, 0.35, 0.07); bell(659, 0.12, 0.5, 0.035); }, // abrir documento o guía
+    close: function(){ swoosh(1600, 500, 0.25, 0.05); },
+    ding: function(){ bell(1047, 0, 0.5, 0.05); bell(1568, 0.09, 0.7, 0.045); }, // copiado o paso marcado
+    fanfare: function(){ [523, 659, 784, 1047].forEach(function(f, i){ bell(f, i * 0.11, 0.9, 0.055); }); bell(523, 0.48, 1.4, 0.035); bell(784, 0.48, 1.4, 0.03); }
   };
   function play(name){ if (soundOn && sfx[name]) try { sfx[name](); } catch(e){} }
   var snd = document.getElementById('snd');
@@ -1016,7 +1093,7 @@ footer.nav{position:fixed; left:0; right:0; bottom:0; z-index:5; background:var(
     try { history.replaceState(null, '', '#' + name); } catch(e){}
   }
   document.querySelectorAll('[data-go]').forEach(function(b){
-    b.addEventListener('click', function(){ play('tick'); if (b.dataset.go === 'tutorial') go(1); else showPage(b.dataset.go); });
+    b.addEventListener('click', function(){ play('select'); if (b.dataset.go === 'tutorial') go(1); else showPage(b.dataset.go); });
   });
 
   function label(){
@@ -1066,7 +1143,7 @@ footer.nav{position:fixed; left:0; right:0; bottom:0; z-index:5; background:var(
     go(cur === last ? 0 : cur + 1);
     play(cur === last ? 'fanfare' : 'tick');
   });
-  prev.addEventListener('click', function(){ go(page ? 0 : cur - 1, true); play('tick'); });
+  prev.addEventListener('click', function(){ go(page ? 0 : cur - 1, true); play('back'); });
 
   // Saludo según la hora
   var h = new Date().getHours(), hola = h < 12 ? 'Buenos días' : (h < 19 ? 'Buenas tardes' : 'Buenas noches');
@@ -1076,9 +1153,9 @@ footer.nav{position:fixed; left:0; right:0; bottom:0; z-index:5; background:var(
   var coach = document.getElementById('coach'), okBtn = document.getElementById('coach-ok'), CKEY = 'copilot-guia-vista', firstTime = false;
   function coachSeen(){ try { return localStorage.getItem(CKEY) === '1'; } catch(e){ return false; } }
   function openCoach(first){ firstTime = !!first; okBtn.innerHTML = first ? 'Entendido, empecemos por el tutorial →' : 'Entendido'; coach.hidden = false; okBtn.focus(); }
-  function closeCoach(){ coach.hidden = true; try { localStorage.setItem(CKEY, '1'); } catch(e){} play('tick'); if (firstTime) { firstTime = false; go(1); } next.focus(); }
+  function closeCoach(){ coach.hidden = true; try { localStorage.setItem(CKEY, '1'); } catch(e){} play(firstTime ? 'reveal' : 'close'); if (firstTime) { firstTime = false; go(1); } next.focus(); }
   okBtn.addEventListener('click', closeCoach);
-  document.getElementById('help').addEventListener('click', function(){ play('tick'); openCoach(false); });
+  document.getElementById('help').addEventListener('click', function(){ play('open'); openCoach(false); });
   coach.addEventListener('click', function(e){ if (e.target === coach) closeCoach(); });
   document.addEventListener('keydown', function(e){
     if (!coach.hidden) { if (e.key === 'Escape') closeCoach(); return; }
@@ -1112,7 +1189,7 @@ footer.nav{position:fixed; left:0; right:0; bottom:0; z-index:5; background:var(
   var tabs = Array.prototype.slice.call(document.querySelectorAll('.apps button'));
   tabs.forEach(function(t){
     t.addEventListener('click', function(){
-      play('tick');
+      play('select');
       pauseVideos();
       tabs.forEach(function(x){ x.setAttribute('aria-selected', x === t ? 'true' : 'false'); });
       document.querySelectorAll('.apppane').forEach(function(p){ p.hidden = p.dataset.pane !== t.dataset.app; });
@@ -1144,7 +1221,7 @@ footer.nav{position:fixed; left:0; right:0; bottom:0; z-index:5; background:var(
     var my = ++job;
     document.getElementById('viewer-t').textContent = a.querySelector('strong').textContent;
     document.getElementById('viewer-src').href = a.href;
-    viewer.hidden = false; document.getElementById('viewer-x').focus(); play('reveal');
+    viewer.hidden = false; document.getElementById('viewer-x').focus(); play('open');
     msg('Cargando el documento…');
     loadPdfjs().then(function(lib){ return lib.getDocument(a.dataset.doc).promise; }).then(function(pdf){
       if (my !== job) return;
@@ -1161,7 +1238,7 @@ footer.nav{position:fixed; left:0; right:0; bottom:0; z-index:5; background:var(
       })();
     }).catch(function(){ if (my === job) msg('No se pudo mostrar aquí. Use “Abrir original” arriba.'); });
   }
-  function closeDoc(){ job++; viewer.hidden = true; pages.innerHTML = ''; play('tick'); }
+  function closeDoc(){ job++; viewer.hidden = true; pages.innerHTML = ''; play('close'); }
   document.querySelectorAll('a[data-doc]').forEach(function(a){
     a.addEventListener('click', function(e){ e.preventDefault(); openDoc(a); });
   });
