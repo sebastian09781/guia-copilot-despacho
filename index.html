@@ -48,6 +48,8 @@ main{max-width:52rem; margin:0 auto; padding-block:clamp(14px, 3vh, 28px) 100px}
 .qnum{font-size:.95rem; font-weight:700; letter-spacing:.07em; text-transform:uppercase; color:var(--c)}
 .qtext{font-size:clamp(2rem, 4.6vw, 3.1rem); max-width:16em; transition:font-size .45s ease}
 .hint{color:var(--muted); font-size:1rem}
+.hint.scene{max-width:36em; text-align:left; color:var(--ink); font-size:1.08rem; line-height:1.5; background:var(--surface); border:1px solid var(--line); border-left:5px solid var(--c); border-radius:12px; padding:12px 18px}
+.hint.scene b{display:block; color:var(--c); font-size:.85rem; letter-spacing:.06em; text-transform:uppercase; margin-bottom:2px}
 .step.open .qhead{flex-direction:row; text-align:left; padding-top:0; gap:18px}
 .step.open .badge{width:64px; height:64px; border-radius:18px; font-size:30px}
 .step.open .qtext{font-size:clamp(1.5rem, 3vw, 1.9rem)}
@@ -141,6 +143,10 @@ main{max-width:52rem; margin:0 auto; padding-block:clamp(14px, 3vh, 28px) 100px}
 
 /* Video */
 .vid{display:flex; flex-direction:column; gap:10px}
+figure.shot{margin:0; width:100%; text-align:left; background:var(--surface); border:1px solid var(--line); border-radius:16px; overflow:hidden}
+figure.shot img{display:block; width:100%; height:auto; border-bottom:1px solid var(--line)}
+figure.shot figcaption{padding:10px 16px; color:var(--muted); font-size:.92rem; line-height:1.45}
+.srchead{font-size:.82rem; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:var(--muted); padding:14px 4px 4px}
 .vidhint{display:flex; gap:12px; align-items:center; background:var(--blue-soft); color:var(--blue); border-radius:14px; padding:12px 16px; font-size:1.05rem; line-height:1.4}
 .vidhint .ico{font-size:1.7rem}
 .vidjump{font:inherit; align-self:flex-start; display:inline-flex; gap:8px; align-items:center; font-weight:700; font-size:.95rem; color:var(--blue); background:var(--blue-soft); border:0; border-radius:999px; padding:6px 14px; cursor:pointer}
@@ -409,7 +415,7 @@ footer.nav{position:fixed; left:0; right:0; bottom:0; z-index:5; background:var(
         <li><svg class="ico"><use href="#i-calendar"/></svg>Unos 20 minutos</li>
         <li><svg class="ico"><use href="#i-play"/></svg>Con videos cortos</li>
       </ul>
-      <p class="muted">Cada paso empieza con una pregunta. Piénsela un momento y luego toque <b>Ver respuesta</b>.</p>
+      <p class="muted">La guía sigue tres días de un caso imaginario en el despacho. Cada escena trae una pregunta: piénsela un momento y luego toque <b>Ver respuesta</b>.</p>
       <p class="credit">Creado por Juan Sebastián Rodríguez Casas, judicante del despacho</p>
     </div>
   </section>
@@ -418,7 +424,7 @@ footer.nav{position:fixed; left:0; right:0; bottom:0; z-index:5; background:var(
   <section class="step" data-title="Qué es la IA" style="--c:var(--blue);--cs:var(--blue-soft)" hidden>
     <div class="qhead"><div class="badge"><svg class="ico"><use href="#i-spark"/></svg></div>
       <div class="qmeta"><p class="qnum">Pregunta 1</p><h2 class="qtext">¿Qué es la inteligencia artificial?</h2></div>
-      <p class="hint">Piénselo un momento…</p></div>
+      <p class="hint scene"><b>Lunes, 8:00 a. m.</b>Llega por reparto una demanda de nulidad de 180 páginas. En el pasillo alguien comenta: “eso se lo pasa a la IA y en un minuto está”. Antes de creerle, conviene saber de qué hablamos.</p></div>
     <div class="answer">
       <p class="big">Son programas que <b>aprenden de millones de ejemplos</b> a reconocer patrones. Con eso pueden responder, clasificar o redactar.</p>
       <p class="taphint"><svg class="ico"><use href="#i-hand"/></svg>Usted ya la usa todos los días. Toque cada tarjeta para ver cómo.</p>
@@ -445,7 +451,7 @@ footer.nav{position:fixed; left:0; right:0; bottom:0; z-index:5; background:var(
   <section class="step" data-title="Cómo responde" style="--c:var(--violet);--cs:var(--violet-soft)" hidden>
     <div class="qhead"><div class="badge"><svg class="ico"><use href="#i-chat"/></svg></div>
       <div class="qmeta"><p class="qnum">Pregunta 2</p><h2 class="qtext">¿Cómo “piensa” una IA como Copilot?</h2></div>
-      <p class="hint">Piénselo un momento…</p></div>
+      <p class="hint scene"><b>Lunes, 8:20 a. m.</b>Un colega cuenta que la IA le citó una sentencia con fecha y radicado. La buscó en la relatoría y no existía. ¿Cómo puede equivocarse con tanta seguridad?</p></div>
     <div class="answer">
       <p class="big">No piensa como una persona. <b>Adivina la palabra que más probablemente sigue</b>, una tras otra.</p>
       <div class="predict" aria-label="Ejemplo: la IA completa una frase palabra por palabra">
@@ -454,6 +460,7 @@ footer.nav{position:fixed; left:0; right:0; bottom:0; z-index:5; background:var(
       </div>
       <div class="warn"><svg class="ico"><use href="#i-alert"/></svg><p>Por eso siempre suena segura. Pero puede escribir algo falso con la misma seguridad, como una sentencia que no existe. A eso se le llama <b>alucinación</b>.</p></div>
       <div class="analogy"><svg class="ico"><use href="#i-user"/></svg><p>Es como un practicante muy rápido que ha leído muchísimo, pero no conoce el expediente. Hay que darle contexto y revisar lo que entrega.</p></div>
+      <div class="vid" data-id="_peHYwe_784" data-title="¿Las máquinas pueden pensar con la Inteligencia Artificial?" data-meta="CuriosaMente · español · 6 min"></div>
     </div>
   </section>
 
@@ -461,7 +468,7 @@ footer.nav{position:fixed; left:0; right:0; bottom:0; z-index:5; background:var(
   <section class="step" data-title="Palabras clave" style="--c:var(--amber);--cs:var(--amber-soft)" hidden>
     <div class="qhead"><div class="badge"><svg class="ico"><use href="#i-book"/></svg></div>
       <div class="qmeta"><p class="qnum">Pregunta 3</p><h2 class="qtext">¿Qué palabras va a escuchar en el taller?</h2></div>
-      <p class="hint">Son ocho. ¿Cuántas conoce?</p></div>
+      <p class="hint scene"><b>Lunes, 9:00 a. m.</b>Llega la invitación al taller. El temario habla de prompts, tokens, Microsoft Graph y alucinaciones. Son dieciséis palabras. ¿Cuántas conoce?</p></div>
     <div class="answer">
       <p class="taphint"><svg class="ico"><use href="#i-hand"/></svg>Toque cada tarjeta para ver qué significa y un ejemplo de la vida diaria.</p>
       <div class="flips tiles">
@@ -490,6 +497,34 @@ footer.nav{position:fixed; left:0; right:0; bottom:0; z-index:5; background:var(
           <span class="f"><svg class="ico"><use href="#i-mask"/></svg><b>Anonimizar</b><small>Toque para voltear</small></span>
           <span class="b"><p><b>Quitar nombres, cédulas y datos</b> personales antes de usar un documento.</p><p class="like">Es como la versión de una providencia que se publica en la relatoría.</p></span></span></button>
       </div>
+      <p class="taphint"><svg class="ico"><use href="#i-spark"/></svg>Ocho más, propias de Copilot. En el taller las van a nombrar.</p>
+      <div class="flips tiles">
+        <button class="flip" type="button" style="--c:var(--blue);--cs:var(--blue-soft)"><span class="in">
+          <span class="f"><svg class="ico"><use href="#i-copy"/></svg><b>Token</b><small>Toque para voltear</small></span>
+          <span class="b"><p>El <b>pedacito de texto</b> que procesa la IA: una palabra o parte de ella. Cada conversación tiene un límite de tokens.</p><p class="like">Es como el máximo de folios de una carpeta: lo que no cabe se queda por fuera.</p></span></span></button>
+        <button class="flip" type="button" style="--c:var(--violet);--cs:var(--violet-soft)"><span class="in">
+          <span class="f"><svg class="ico"><use href="#i-link"/></svg><b>Microsoft Graph</b><small>Toque para voltear</small></span>
+          <span class="b"><p>La <b>conexión</b> por la que Copilot llega a sus correos, chats y documentos. Solo a los que usted ya tiene permiso de ver.</p><p class="like">Es como el archivo del despacho: Copilot solo abre las carpetas a las que usted tiene llave.</p></span></span></button>
+        <button class="flip" type="button" style="--c:var(--green);--cs:var(--green-soft)"><span class="in">
+          <span class="f"><svg class="ico"><use href="#i-search"/></svg><b>Fundamentación</b><small>En inglés, grounding</small></span>
+          <span class="b"><p>Cuando Copilot <b>respalda su respuesta en fuentes reales</b>, la web o sus documentos, en vez de responder de memoria.</p><p class="like">Es como exigir que cada afirmación del proyecto tenga su cita al folio.</p></span></span></button>
+        <button class="flip" type="button" style="--c:var(--amber);--cs:var(--amber-soft)"><span class="in">
+          <span class="f"><svg class="ico"><use href="#i-book"/></svg><b>RAG</b><small>Generación aumentada por recuperación</small></span>
+          <span class="b"><p>Primero <b>busca los documentos</b> que sirven y luego <b>redacta</b> con base en ellos.</p><p class="like">Es como el auxiliar que primero saca los expedientes del archivo y después escribe el informe.</p></span></span></button>
+        <button class="flip" type="button" style="--c:var(--blue);--cs:var(--blue-soft)"><span class="in">
+          <span class="f"><svg class="ico"><use href="#i-target"/></svg><b>Indexación semántica</b><small>Toque para voltear</small></span>
+          <span class="b"><p>Un índice que encuentra información <b>por su significado</b>, no solo por palabras exactas, respetando los permisos.</p><p class="like">Es como buscar “el caso del relleno sanitario” y encontrarlo aunque el expediente diga “disposición final de residuos”.</p></span></span></button>
+        <button class="flip" type="button" style="--c:var(--green);--cs:var(--green-soft)"><span class="in">
+          <span class="f"><svg class="ico"><use href="#i-shield"/></svg><b>Protección de datos empresariales</b><small>El escudo verde</small></span>
+          <span class="b"><p>Microsoft trata sus datos como <b>encargado</b> y no los usa para entrenar la IA. Se reconoce por un <b>escudo verde</b> en la pantalla.</p><p class="like">Es como la reserva del expediente: lo que entra al despacho no sale.</p></span></span></button>
+        <button class="flip" type="button" style="--c:var(--red);--cs:var(--red-soft)"><span class="in">
+          <span class="f"><svg class="ico"><use href="#i-lock"/></svg><b>Etiqueta de confidencialidad</b><small>Microsoft Purview</small></span>
+          <span class="b"><p>Un <b>sello</b>, como “Confidencial”, que clasifica un documento y puede cifrarlo. Copilot lo respeta.</p><p class="like">Es como el sello de “Reservado” en la carátula del expediente.</p></span></span></button>
+        <button class="flip" type="button" style="--c:var(--violet);--cs:var(--violet-soft)"><span class="in">
+          <span class="f"><svg class="ico"><use href="#i-chat"/></svg><b>Copilot Chat y Copilot con licencia</b><small>No son lo mismo</small></span>
+          <span class="b"><p><b>Copilot Chat</b> trabaja sobre todo con la web. <b>Con licencia</b>, además usa su correo, archivos, reuniones y chats.</p><p class="like">Es como la diferencia entre la biblioteca pública y el archivo del propio despacho.</p></span></span></button>
+      </div>
+      <p class="ref">Definiciones basadas en la documentación oficial de Microsoft Learn (en español). Microsoft hoy llama a su producto “Microsoft Copilot” y a la versión gratuita “Microsoft Copilot Chat”.</p>
     </div>
   </section>
 
@@ -497,7 +532,7 @@ footer.nav{position:fixed; left:0; right:0; bottom:0; z-index:5; background:var(
   <section class="step" data-title="Qué es Copilot" style="--c:var(--blue);--cs:var(--blue-soft)" hidden>
     <div class="qhead"><div class="badge"><svg class="ico"><use href="#i-robot"/></svg></div>
       <div class="qmeta"><p class="qnum">Pregunta 4</p><h2 class="qtext">¿Y entonces qué es Copilot?</h2></div>
-      <p class="hint">Piénselo un momento…</p></div>
+      <p class="hint scene"><b>Lunes, 9:30 a. m.</b>Al abrir la demanda en Word aparece un ícono nuevo en la cinta de arriba. Dice “Copilot”. ¿Es lo mismo que ChatGPT?</p></div>
     <div class="answer">
       <p class="big">Es la <b>IA de Microsoft</b> que vive dentro de los programas que usted ya usa. Usted le pide algo y él propone. <b>Usted decide</b>.</p>
       <p class="taphint"><svg class="ico"><use href="#i-hand"/></svg>Toque cada programa para ver un ejemplo.</p>
@@ -532,7 +567,7 @@ footer.nav{position:fixed; left:0; right:0; bottom:0; z-index:5; background:var(
   <section class="step" data-title="Copilot en la Rama" style="--c:var(--violet);--cs:var(--violet-soft)" hidden>
     <div class="qhead"><div class="badge"><svg class="ico"><use href="#i-columns"/></svg></div>
       <div class="qmeta"><p class="qnum">Pregunta 5</p><h2 class="qtext">¿Por qué la Rama Judicial eligió Copilot?</h2></div>
-      <p class="hint">Piénselo un momento…</p></div>
+      <p class="hint scene"><b>Lunes, 10:00 a. m.</b>La sustanciadora pregunta, preocupada: “¿y si le pegamos la demanda, eso no se filtra a internet?”. Buena pregunta.</p></div>
     <div class="answer">
       <p class="big">Porque se integra con el correo y los programas de la Rama. Antes de adoptarlo, <b>lo probó, lo reguló y compró licencias</b>.</p>
       <div class="road">
@@ -549,7 +584,7 @@ footer.nav{position:fixed; left:0; right:0; bottom:0; z-index:5; background:var(
   <section class="step" data-title="Dónde lo encuentro" style="--c:var(--green);--cs:var(--green-soft)" hidden>
     <div class="qhead"><div class="badge"><svg class="ico"><use href="#i-search"/></svg></div>
       <div class="qmeta"><p class="qnum">Pregunta 6</p><h2 class="qtext">¿Dónde lo encuentro y qué le pido?</h2></div>
-      <p class="hint">Piénselo un momento…</p></div>
+      <p class="hint scene"><b>Lunes, 10:30 a. m.</b>Hora de probar. La demanda está abierta en Word, el correo tiene doce mensajes de Secretaría y a las 4 hay reunión de despacho por Teams.</p></div>
     <div class="answer">
       <p class="taphint"><svg class="ico"><use href="#i-hand"/></svg>Toque cada programa para ver cómo funciona y su video.</p>
       <div class="apps" role="tablist" aria-label="Programas">
@@ -558,7 +593,8 @@ footer.nav{position:fixed; left:0; right:0; bottom:0; z-index:5; background:var(
         <button type="button" role="tab" aria-selected="false" data-app="t" style="--c:var(--green);--cs:var(--green-soft)"><svg class="ico"><use href="#i-meet"/></svg>Teams</button>
       </div>
       <div class="apppane" data-pane="w">
-        <p>Toque el botón de Copilot en la cinta de arriba. Se abre un panel a la derecha.</p>
+        <p>Busque el ícono de colores de Copilot. En la versión actual aparece abajo a la derecha del documento; en otras, en la cinta de arriba. Al tocarlo se abre un panel para escribirle.</p>
+        <figure class="shot"><img src="img/word-copilot.png" alt="Documento en blanco en Microsoft Word con el ícono de Copilot abajo a la derecha y sugerencias como Empezar a escribir" loading="lazy" width="1526" height="885"><figcaption>Así se ve en Microsoft Word: la flecha señala el ícono de Copilot. Imagen de Microsoft. Used with permission from Microsoft.</figcaption></figure>
         <p class="ask"><svg class="ico"><use href="#i-chat"/></svg>“Resume esta demanda en una tabla con partes, acto demandado y pretensiones.”</p>
         <a class="guide-link" href="https://support.microsoft.com/es-es/Word/welcome-to-copilot-in-word" target="_blank" rel="noopener"><svg class="ico"><use href="#i-eye"/></svg>Ver dónde está, con imágenes (guía oficial de Microsoft)</a>
         <div class="vid" data-id="voEF-OAwoec" data-title="La IA en Word, Excel y PowerPoint: cómo funciona Copilot" data-meta="YouTube · español · muestra la versión de hogar; la de la Rama se ve muy parecida"></div>
@@ -582,7 +618,7 @@ footer.nav{position:fixed; left:0; right:0; bottom:0; z-index:5; background:var(
   <section class="step" data-title="Cómo pedirle" style="--c:var(--amber);--cs:var(--amber-soft)" hidden>
     <div class="qhead"><div class="badge"><svg class="ico"><use href="#i-target"/></svg></div>
       <div class="qmeta"><p class="qnum">Pregunta 7</p><h2 class="qtext">¿Cómo le pido las cosas para que me entienda?</h2></div>
-      <p class="hint">Piénselo un momento…</p></div>
+      <p class="hint scene"><b>Lunes, 11:00 a. m.</b>Usted le escribe “resuma esto” y Copilot devuelve un párrafo genérico que no sirve para el estudio de admisión. ¿Qué faltó?</p></div>
     <div class="answer">
       <p class="big">Igual que a una persona: <b>entre más claro, mejor</b>.</p>
       <div class="compare">
@@ -609,7 +645,7 @@ footer.nav{position:fixed; left:0; right:0; bottom:0; z-index:5; background:var(
   <section class="step" data-title="Instrucciones listas" style="--c:var(--green);--cs:var(--green-soft)" hidden>
     <div class="qhead"><div class="badge"><svg class="ico"><use href="#i-copy"/></svg></div>
       <div class="qmeta"><p class="qnum">Pregunta 8</p><h2 class="qtext">¿Qué le puedo pedir desde mañana?</h2></div>
-      <p class="hint">Piénselo un momento…</p></div>
+      <p class="hint scene"><b>Lunes, 11:30 a. m.</b>Con la fórmula clara, el resumen salió bien a la primera. Ahora quiere instrucciones listas para el trabajo de todos los días.</p></div>
     <div class="answer">
       <p class="muted">Copie, pegue en Copilot y ajuste. Entre paréntesis, el nivel del Acuerdo PCSJA24-12243.</p>
       <div class="prompts">
@@ -626,7 +662,7 @@ footer.nav{position:fixed; left:0; right:0; bottom:0; z-index:5; background:var(
   <section class="step" data-title="Las reglas" style="--c:var(--red);--cs:var(--red-soft)" hidden>
     <div class="qhead"><div class="badge"><svg class="ico"><use href="#i-scale"/></svg></div>
       <div class="qmeta"><p class="qnum">Pregunta 9</p><h2 class="qtext">¿Qué no puedo hacer con Copilot?</h2></div>
-      <p class="hint">Piénselo un momento…</p></div>
+      <p class="hint scene"><b>Lunes, 2:00 p. m.</b>Copilot entregó un borrador del estudio de admisión que se lee impecable. La tentación es pegarlo tal cual en el auto. ¿Se puede?</p></div>
     <div class="answer">
       <p class="big">Tres reglas que vienen de la <b>Sentencia T-323 de 2024</b> y del <b>Acuerdo PCSJA24-12243</b>.</p>
       <p class="taphint"><svg class="ico"><use href="#i-hand"/></svg>Toque cada regla para ver un ejemplo.</p>
@@ -648,7 +684,7 @@ footer.nav{position:fixed; left:0; right:0; bottom:0; z-index:5; background:var(
   <section class="step" data-title="La constancia" style="--c:var(--violet);--cs:var(--violet-soft)" hidden>
     <div class="qhead"><div class="badge"><svg class="ico"><use href="#i-stamp"/></svg></div>
       <div class="qmeta"><p class="qnum">Pregunta 10</p><h2 class="qtext">¿Y si Copilot me ayudó en una decisión?</h2></div>
-      <p class="hint">Piénselo un momento…</p></div>
+      <p class="hint scene"><b>Lunes, 4:00 p. m.</b>El auto está listo. Usted lo revisó y lo decidió, pero Copilot ayudó a ordenar los hechos. ¿Hay que decirlo en alguna parte?</p></div>
     <div class="answer">
       <p class="big">Se <b>deja constancia</b> en el expediente o en la providencia: en el texto, en nota al pie o en un anexo.</p>
       <ol class="checksteps">
@@ -666,7 +702,7 @@ footer.nav{position:fixed; left:0; right:0; bottom:0; z-index:5; background:var(
   <section class="step" data-title="Prompt injection" style="--c:var(--red);--cs:var(--red-soft)" hidden>
     <div class="qhead"><span class="level"><svg class="ico"><use href="#i-spark"/></svg>Nivel avanzado</span><div class="badge"><svg class="ico"><use href="#i-shield"/></svg></div>
       <div class="qmeta"><p class="qnum">Pregunta 11</p><h2 class="qtext">¿Alguien puede engañar a Copilot?</h2></div>
-      <p class="hint">Piénselo un momento…</p></div>
+      <p class="hint scene"><b>Martes, 9:00 a. m.</b>Llega el memorial de subsanación. Copilot lo resume y concluye que la demanda “cumple todos los requisitos”. Pero usted recuerda que faltaba un anexo. Algo no cuadra.</p></div>
     <div class="answer">
       <p class="big">Sí. Se llama <b>prompt injection</b> (inyección de instrucciones): alguien <b>esconde una orden</b> dentro de un documento o correo, y la IA la obedece al leerlo.</p>
       <div class="docmock" id="docmock">
@@ -689,7 +725,7 @@ footer.nav{position:fixed; left:0; right:0; bottom:0; z-index:5; background:var(
   <section class="step" data-title="Sesgos" style="--c:var(--violet);--cs:var(--violet-soft)" hidden>
     <div class="qhead"><span class="level"><svg class="ico"><use href="#i-spark"/></svg>Nivel avanzado</span><div class="badge"><svg class="ico"><use href="#i-balance2"/></svg></div>
       <div class="qmeta"><p class="qnum">Pregunta 12</p><h2 class="qtext">¿La IA puede tener prejuicios?</h2></div>
-      <p class="hint">Piénselo un momento…</p></div>
+      <p class="hint scene"><b>Martes, 10:00 a. m.</b>Usted le pide a Copilot argumentos sobre el caso y todos apuntan hacia el mismo lado. ¿Puede una máquina tener una inclinación?</p></div>
     <div class="answer">
       <p class="big">Sí. Aprendió de textos escritos por personas, con sus prejuicios, y <b>los puede repetir</b>. A eso se le llama <b>sesgo</b>.</p>
       <div class="analogy"><svg class="ico"><use href="#i-user"/></svg><p>Si le pide a una IA que dibuje “un juez”, es posible que casi siempre dibuje a un hombre. No es mala intención: es lo que más vio.</p></div>
@@ -706,7 +742,7 @@ footer.nav{position:fixed; left:0; right:0; bottom:0; z-index:5; background:var(
   <section class="step" data-title="Pruebas falsas" style="--c:var(--amber);--cs:var(--amber-soft)" hidden>
     <div class="qhead"><span class="level"><svg class="ico"><use href="#i-spark"/></svg>Nivel avanzado</span><div class="badge"><svg class="ico"><use href="#i-mic"/></svg></div>
       <div class="qmeta"><p class="qnum">Pregunta 13</p><h2 class="qtext">¿Puedo creerle a un audio, una foto o un video?</h2></div>
-      <p class="hint">Piénselo un momento…</p></div>
+      <p class="hint scene"><b>Martes, 11:00 a. m.</b>Una de las partes aporta un audio en el que el alcalde supuestamente reconoce la irregularidad. La voz suena idéntica a la suya.</p></div>
     <div class="answer">
       <p class="big">Ya no a simple vista. Hoy la IA puede fabricar audios, fotos y videos falsos que parecen reales. Se llaman <b>deepfakes</b>.</p>
       <div class="analogy"><svg class="ico"><use href="#i-mic"/></svg><p>Con unos segundos de la voz de una persona, una IA puede hacer un audio en el que “dice” cosas que nunca dijo.</p></div>
@@ -716,7 +752,7 @@ footer.nav{position:fixed; left:0; right:0; bottom:0; z-index:5; background:var(
         <div class="tile" style="--c:var(--green)"><svg class="ico"><use href="#i-stamp"/></svg><b>Si hay duda, peritaje</b><span>Un experto puede analizar si fue manipulado.</span></div>
         <div class="tile" style="--c:var(--red)"><svg class="ico"><use href="#i-scale"/></svg><b>Garantice la contradicción</b><span>La otra parte debe poder controvertirlo.</span></div>
       </div>
-      <p class="ref">La T-323 de 2024 recuerda que decretar y valorar pruebas es tarea del juez, nunca de una IA.</p>
+      <p class="ref">La T-323 de 2024 recuerda que decretar y valorar pruebas es tarea del juez, nunca de una IA. Y la Ley 2502 de 2025 agrava la falsedad personal cuando la suplantación se hace con IA (art. 296 del Código Penal).</p>
     </div>
   </section>
 
@@ -724,7 +760,7 @@ footer.nav{position:fixed; left:0; right:0; bottom:0; z-index:5; background:var(
   <section class="step" data-title="Práctica" style="--c:var(--green);--cs:var(--green-soft)" hidden>
     <div class="qhead"><div class="badge"><svg class="ico"><use href="#i-flask"/></svg></div>
       <div class="qmeta"><p class="qnum">Pregunta 14</p><h2 class="qtext">¿Lista para probarlo?</h2></div>
-      <p class="hint">Quince minutos con una sentencia ya publicada</p></div>
+      <p class="hint scene"><b>Miércoles, 8:00 a. m.</b>Ya conoce las palabras, las reglas y los riesgos. Quince minutos con una sentencia ya publicada bastan para probarlo.</p></div>
     <div class="answer">
       <p class="muted">Use un documento público, nunca un expediente en trámite. Marque cada paso al terminarlo.</p>
       <div class="checks" id="checks">
@@ -748,14 +784,26 @@ footer.nav{position:fixed; left:0; right:0; bottom:0; z-index:5; background:var(
         <span class="ci"><svg class="ico"><use href="#i-spark"/></svg></span>
         <span><strong>Pregúntele ahora a Copilot ↗</strong><small>Inicie sesión con su correo de la Rama. Debajo de su nombre debe decir “M365 Copilot (Premium)”.</small></span>
       </a>
+      <figure class="shot"><img src="img/copilot-chat.png" alt="Pantalla de inicio de Microsoft Copilot con el cuadro para escribir y un escudo verde arriba a la derecha" loading="lazy" width="1920" height="1080"><figcaption>Así se ve la pantalla de inicio de Microsoft Copilot (imagen en inglés). El <b>escudo verde</b> arriba a la derecha indica que la protección de datos empresariales está activa. Imagen de Microsoft. Used with permission from Microsoft.</figcaption></figure>
       <div class="prompt firstq" style="--c:var(--violet)"><svg class="ico"><use href="#i-chat"/></svg><div><p class="q">Explícame en cinco puntos cómo puedes ayudarme en el trabajo de un despacho judicial del Consejo de Estado, y qué no debo pedirte.</p><span class="tag">Una buena primera pregunta para empezar</span></div><button class="copy" type="button"><svg class="ico"><use href="#i-copy"/></svg>Copiar</button></div>
       <p class="big">Si quiere leer el texto completo de las normas, aquí están. Los que tienen el <b>ojo</b> se leen aquí mismo.</p>
       <div class="sources">
+        <p class="srchead">Rama Judicial</p>
         <a href="https://geneticayderecho.uexternado.edu.co/wp-content/uploads/sites/57/2026/03/1.-Acuerdo-PCSJA24-12243.pdf" data-doc="docs/acuerdo-pcsja24-12243.pdf" target="_blank" rel="noopener"><svg class="ico"><use href="#i-stamp"/></svg><span><strong>Acuerdo PCSJA24-12243 de 2024</strong><span>Reglas de uso de IA en la Rama Judicial</span></span><svg class="ico"><use href="#i-eye"/></svg></a>
         <a href="https://www.corteconstitucional.gov.co/relatoria/2024/t-323-24.htm" target="_blank" rel="noopener"><svg class="ico"><use href="#i-scale"/></svg><span><strong>Sentencia T-323 de 2024</strong><span>Uso de IA por jueces · Corte Constitucional</span></span><svg class="ico"><use href="#i-link"/></svg></a>
         <a href="https://ambitojuridico.com/sites/default/files/2024-10/ABC-SentenciaIA-T-323-24.pdf" data-doc="docs/abc-t-323-24.pdf" target="_blank" rel="noopener"><svg class="ico"><use href="#i-book"/></svg><span><strong>ABC de la Sentencia T-323</strong><span>Resumen oficial del Consejo Superior de la Judicatura</span></span><svg class="ico"><use href="#i-eye"/></svg></a>
+        <a href="https://www.ambitojuridico.com/sites/default/files/2024-10/CIR-PCSJC24-37-24.pdf" target="_blank" rel="noopener"><svg class="ico"><use href="#i-mail"/></svg><span><strong>Circular PCSJC24-37 de 2024</strong><span>El Consejo Superior divulga la T-323 a los despachos</span></span><svg class="ico"><use href="#i-link"/></svg></a>
         <a href="https://sedeelectronica.sic.gov.co/sites/default/files/normativa/Circular%20Externa%20No.%20002%20del%2021%20de%20agosto%20de%202024.pdf" data-doc="docs/circular-sic-002-2024.pdf" target="_blank" rel="noopener"><svg class="ico"><use href="#i-lock"/></svg><span><strong>Circular Externa SIC 002 de 2024</strong><span>Datos personales en sistemas de IA</span></span><svg class="ico"><use href="#i-eye"/></svg></a>
-        <a href="https://www.ramajudicial.gov.co/web/utdi/inteligencia-artificial" target="_blank" rel="noopener"><svg class="ico"><use href="#i-columns"/></svg><span><strong>Inteligencia Artificial en la Rama Judicial</strong><span>Página de la Unidad de Transformación Digital</span></span><svg class="ico"><use href="#i-link"/></svg></a>
+        <p class="srchead">Leyes y política nacional</p>
+        <a href="https://colaboracion.dnp.gov.co/CDT/Conpes/Econ%C3%B3micos/4144.pdf" data-doc="docs/conpes-4144-2025.pdf" target="_blank" rel="noopener"><svg class="ico"><use href="#i-flag"/></svg><span><strong>CONPES 4144 de 2025</strong><span>Política Nacional de Inteligencia Artificial</span></span><svg class="ico"><use href="#i-eye"/></svg></a>
+        <a href="https://sidn.ramajudicial.gov.co/SIDN//NORMATIVA/TEXTOS_COMPLETOS/7_LEYES/LEYES%202025/Ley%202502%20de%202025.pdf" data-doc="docs/ley-2502-2025.pdf" target="_blank" rel="noopener"><svg class="ico"><use href="#i-mic"/></svg><span><strong>Ley 2502 de 2025</strong><span>Agrava la suplantación hecha con IA (art. 296 C. P.)</span></span><svg class="ico"><use href="#i-eye"/></svg></a>
+        <a href="http://www.secretariasenado.gov.co/senado/basedoc/ley_2213_2022.html" target="_blank" rel="noopener"><svg class="ico"><use href="#i-globe"/></svg><span><strong>Ley 2213 de 2022</strong><span>Uso de las TIC en los procesos judiciales</span></span><svg class="ico"><use href="#i-link"/></svg></a>
+        <a href="http://www.secretariasenado.gov.co/senado/basedoc/ley_1581_2012.html" target="_blank" rel="noopener"><svg class="ico"><use href="#i-lock"/></svg><span><strong>Ley 1581 de 2012</strong><span>Protección de datos personales</span></span><svg class="ico"><use href="#i-link"/></svg></a>
+        <p class="srchead">Referentes internacionales</p>
+        <a href="https://unesdoc.unesco.org/ark:/48223/pf0000396582" target="_blank" rel="noopener"><svg class="ico"><use href="#i-scale"/></svg><span><strong>UNESCO: Directrices para el uso de IA en juzgados y tribunales (2025)</strong><span>Disponible en español en la misma página</span></span><svg class="ico"><use href="#i-link"/></svg></a>
+        <a href="https://eur-lex.europa.eu/legal-content/ES/TXT/?uri=CELEX:32024R1689" target="_blank" rel="noopener"><svg class="ico"><use href="#i-globe"/></svg><span><strong>Reglamento (UE) 2024/1689 de IA</strong><span>Trata como de alto riesgo la IA que asiste a jueces (anexo III, punto 8)</span></span><svg class="ico"><use href="#i-link"/></svg></a>
+        <p class="srchead">Para seguir aprendiendo</p>
+        <a href="https://www.ramajudicial.gov.co/web/utdi/inteligencia-artificial1" target="_blank" rel="noopener"><svg class="ico"><use href="#i-columns"/></svg><span><strong>Inteligencia Artificial en la Rama Judicial</strong><span>Página de la Unidad de Transformación Digital</span></span><svg class="ico"><use href="#i-link"/></svg></a>
       </div>
       <p class="credit">Creado por Juan Sebastián Rodríguez Casas, judicante del despacho · noviembre de 2026</p>
     </div>
